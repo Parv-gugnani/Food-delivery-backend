@@ -1,0 +1,76 @@
+# Structure of App
+
+### Home page
+
+home page(/) is main page in which user will be able to access all the features.
+
+From home page user can access →
+
+- login/sign up
+- if anyone want to sign their restaurants they will be redirected to admin login/sign up page
+- user profile if logged in as user
+- Admin profile if logged in as Admin
+- link to the delivery app if anyone want to be the delivery partner
+
+### If logged in as User-
+
+- restaurants
+- restaurants showing time (how much time they can take for deliver if you order)
+- dine in option
+- search option to search restaurants
+- Sales option if any sales is going on in any Restaurants
+- Time of restaurants (when will they close or how many time remaining)
+- if final something , make payment option using any upi or debit or credit
+- if finally payment complete and address okay then-
+  - a sooner will pop up from bottom(will keep showing status)
+  - Order accepted or not notification
+  - driver location will be seen
+  - order id
+  - time of delivery
+  - bill
+  - add tip for delivery guy
+  - share status to someone else
+  - cancel option
+- User profile avatar at top
+- user profile option , user can access their profile
+  - Username
+  - last name
+  - address
+  - birthday
+  - orders
+  - coupons available
+  - logout Option
+
+### If logged in as Admin
+
+- Admin can turn on / off the restaurant
+- they can add timings
+- if any food is available or not
+- to accept the order or not
+- add items to menu
+- create categories
+- upload images of food in items
+- if order ready then delivery guy will pick up order
+- admin can tick if order is picked up or not
+
+### if order is delivered-
+
+- user can put rating
+- can even complaint if any bad behavior
+- tip can be added too
+
+Structure
+
+Main page —>
+
+if(logged == user){
+
+home, dine-in, Profile
+
+}
+
+if(logged == admin){
+
+home, orders, dashboard
+
+}
