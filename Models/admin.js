@@ -22,7 +22,6 @@ const AdminUserSchema = new mongoose.Schema(
     resturant_name: {
       type: String,
       required: true,
-      unique: true,
     },
     resturant_phone_number: {
       type: String,
@@ -32,7 +31,6 @@ const AdminUserSchema = new mongoose.Schema(
     resturant_address: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,

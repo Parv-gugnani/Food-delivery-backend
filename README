@@ -1,76 +1,83 @@
-# Structure of App
+# Food Delivery App
 
-### Home page
+This repository contains a food delivery application with a full user and admin functionality. The app allows users to explore restaurants, place orders, track deliveries, and manage their profiles, while admins can manage restaurant settings and orders. Delivery partners can also access the app to manage delivery tasks.
 
-home page(/) is main page in which user will be able to access all the features.
+## App Structure
 
-From home page user can access →
+### Home Page
 
-- login/sign up
-- if anyone want to sign their restaurants they will be redirected to admin login/sign up page
-- user profile if logged in as user
-- Admin profile if logged in as Admin
-- link to the delivery app if anyone want to be the delivery partner
+The **Home Page** (`/`) is the main page where users can access all the features. From here, users can navigate to:
 
-### If logged in as User-
+- **Login/Sign Up**: For users to create or access their accounts.
+- **Admin Login/Sign Up**: If someone wants to sign up or log in as a restaurant admin.
+- **User Profile** (if logged in as a user).
+- **Admin Profile** (if logged in as an admin).
+- **Delivery Partner Link**: A link for individuals who want to be delivery partners.
 
-- restaurants
-- restaurants showing time (how much time they can take for deliver if you order)
-- dine in option
-- search option to search restaurants
-- Sales option if any sales is going on in any Restaurants
-- Time of restaurants (when will they close or how many time remaining)
-- if final something , make payment option using any upi or debit or credit
-- if finally payment complete and address okay then-
-  - a sooner will pop up from bottom(will keep showing status)
-  - Order accepted or not notification
-  - driver location will be seen
-  - order id
-  - time of delivery
-  - bill
-  - add tip for delivery guy
-  - share status to someone else
-  - cancel option
-- User profile avatar at top
-- user profile option , user can access their profile
-  - Username
-  - last name
-  - address
-  - birthday
-  - orders
-  - coupons available
-  - logout Option
+---
 
-### If logged in as Admin
+## Features
 
-- Admin can turn on / off the restaurant
-- they can add timings
-- if any food is available or not
-- to accept the order or not
-- add items to menu
-- create categories
-- upload images of food in items
-- if order ready then delivery guy will pick up order
-- admin can tick if order is picked up or not
+### If logged in as User:
 
-### if order is delivered-
+- **Restaurants**: View available restaurants.
+- **Delivery Time**: See estimated delivery time for each restaurant.
+- **Dine-in Option**: Check if dine-in is available.
+- **Search**: Search for restaurants.
+- **Sales**: View ongoing sales at any restaurants.
+- **Restaurant Timings**: Check the restaurant's closing time or how much time is left before closing.
+- **Make Payment**: Complete payments via UPI, debit card, or credit card.
+- **Order Status**:
 
-- user can put rating
-- can even complaint if any bad behavior
-- tip can be added too
+  - A pop-up notification showing order status (accepted or not).
+  - Track driver location.
+  - View order ID, delivery time, bill details.
+  - Add a tip for the delivery person.
+  - Share status with someone else.
+  - Option to cancel the order.
 
-Structure
+- **User Profile**:
+  - View profile with:
+    - Username
+    - Last name
+    - Address
+    - Birthday
+    - Orders
+    - Available coupons
+  - **Logout** option.
 
-Main page —>
+### If logged in as Admin:
 
-if(logged == user){
+- **Restaurant Management**:
+  - Turn the restaurant on or off.
+  - Add restaurant timings.
+  - Check food availability.
+  - Accept or reject orders.
+  - Add items to the menu.
+  - Create categories.
+  - Upload images of food items.
+  - Mark orders as picked up when the delivery person takes the order.
 
-home, dine-in, Profile
+---
 
+### If Order is Delivered:
+
+- Users can rate the delivery experience.
+- Users can file complaints in case of bad behavior.
+- Users can add a tip for the delivery person.
+
+---
+
+## Navigation Structure
+
+```js
+if(logged === 'user') {
+    // User Navigation
+    home, dine-in, profile
 }
 
-if(logged == admin){
-
-home, orders, dashboard
-
+if(logged === 'admin') {
+    // Admin Navigation
+    home, orders, dashboard
 }
+```
