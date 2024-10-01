@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema(
+const AdminUserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -10,11 +10,26 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
+    owner_address: {
       type: String,
       required: true,
     },
-    phone_number: {
+    owner_phone_number: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    resturant_name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    resturant_phone_number: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    resturant_address: {
       type: String,
       required: true,
       unique: true,
@@ -32,4 +47,4 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("AdminUser", AdminUserSchema);

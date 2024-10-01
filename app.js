@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const userRoutes = require("./router/userRoute");
 
 //routes
 
@@ -9,11 +10,17 @@ mongoose
   .connect("mongodb://localhost:27017/foodp", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB", err);
+  });
 
 app.use(express.json());
+app.use("/api", userRoutes);
 
 const PORT = process.env.PORT || 3000;
 
