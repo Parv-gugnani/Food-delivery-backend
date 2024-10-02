@@ -7,19 +7,18 @@ const userRoutes = require("./routes/userRouters");
 const app = express();
 
 // Middleware
-app.use(express.json()); // Parse incoming JSON payloads
-app.use(cors()); // Enable CORS
+app.use(express.json());
+app.use(cors());
 
 dotenv.config();
 
-// Connect to MongoDB
 mongoose
   .connect("mongodb://localhost:27017/foodp")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB", err));
 
 // User routes
-app.use("/api/users", userRoutes); // Notice it's /users here
+app.use("/api/users", userRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

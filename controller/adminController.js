@@ -4,9 +4,10 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_TOKEN, { expiresIn: "30d" });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
+// Register User
 const registerUser = asyncHandler(async (req, res) => {
   const { firstName, lastName, address, phoneNumber, email, password } =
     req.body;
@@ -61,7 +62,6 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("JWT_SECRET:", process.env.JWT_SECRET);
   if (!email || !password) {
     res.status(400);
     throw new Error("Please fill all fields");
@@ -89,14 +89,3 @@ module.exports = {
   registerUser,
   loginUser,
 };
-
-/*
-
-{
-    "message": "secretOrPrivateKey must have a value",
-    "stack": "Error: secretOrPrivateKey must have a value\n    
-    at module.exports [as sign] (D:\\Node js Projects\\food-delivery-app\\node_modules\\jsonwebtoken\\sign.js:111:20)\n    
-    at generateToken (D:\\Node js Projects\\food-delivery-app\\controller\\userController.js:7:14)\n    
-    at D:\\Node js Projects\\food-delivery-app\\controller\\userController.js:80:14"
-}
-*/

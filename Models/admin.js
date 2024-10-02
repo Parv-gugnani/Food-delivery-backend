@@ -1,34 +1,32 @@
 const mongoose = require("mongoose");
 
-const AdminUserSchema = new mongoose.Schema(
+const userSchema = mongoose.Schema(
   {
-    name: {
+    firstName: {
       type: String,
       required: true,
     },
-    last_name: {
+    lastName: {
       type: String,
       required: true,
     },
-    owner_address: {
+    ownerAddress: {
       type: String,
       required: true,
     },
-    owner_phone_number: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    resturant_name: {
+    ownerPhoneNumber: {
       type: String,
       required: true,
     },
-    resturant_phone_number: {
+    restaurantName: {
       type: String,
       required: true,
-      unique: true,
     },
-    resturant_address: {
+    restaurantAddress: {
+      type: String,
+      required: true,
+    },
+    restaurantPhoneNumber: {
       type: String,
       required: true,
     },
@@ -42,7 +40,11 @@ const AdminUserSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-module.exports = mongoose.model("AdminUser", AdminUserSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
