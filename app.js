@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRouters");
+const adminUsersRoutes = require("./routes/adminRouters");
 
 const app = express();
 
@@ -19,6 +20,7 @@ mongoose
 
 // User routes
 app.use("/api/users", userRoutes);
+app.use("/api/adminusers", adminUsersRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
