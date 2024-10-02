@@ -4,11 +4,11 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_TOKEN, { expiresIn: "30d" });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
+// Register User
 const registerUser = asyncHandler(async (req, res) => {
-  //
   const { firstName, lastName, address, phoneNumber, email, password } =
     req.body;
 
@@ -54,6 +54,38 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid");
+    throw new Error("Invalid User");
   }
 });
+
+// Login User
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Please fill all fields");
+  }
+
+  const user = await User.findOne({ email });
+
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.json({
+      _id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      address: user.address,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid credentials");
+  }
+});
+
+module.exports = {
+  registerUser,
+  loginUser,
+};
