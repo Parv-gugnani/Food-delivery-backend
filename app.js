@@ -2,40 +2,46 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const userRoutes = require("./router/userRoute");
+const User = require("./models/user");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-//routes
+app.use(express.json());
 
-//connect to db
 mongoose
   .connect("mongodb://localhost:27017/foodp")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB", err));
 
+app.get("/test", (req, res) => {
+  res.send("Server is working!");
+});
+
 app.post("/register", async (req, res) => {
+  console.log(req.body); // Add this line in /register
+
   try {
     const { firstName, lastName, address, phoneNumber, email, password } =
       req.body;
 
-    // if anything miss outs
     if (
       !(email && password && firstName && lastName && address && phoneNumber)
     ) {
       res.status(400).send("All input is required");
     }
 
-    // old user
-    const oldUser = await user.findOne({ email });
+    const oldUser = await User.findOne({ email });
 
     if (oldUser) {
-      return res.status(409).send("User Already exist");
+      return res.status(409).send("User Already exists");
     }
 
-    encryptpass = await bcrypt.hash(password, 10);
+    const encryptpass = await bcrypt.hash(password, 10);
 
     const user = await User.create({
       first_name: firstName,
       last_name: lastName,
-      address: address,
+      address,
       phone_number: phoneNumber,
       email: email.toLowerCase(),
       password: encryptpass,
@@ -45,23 +51,17 @@ app.post("/register", async (req, res) => {
       { user_id: user._id, email },
       process.env.TOKEN_KEY,
       {
-        expressIn: "5h",
+        expiresIn: "5h",
       }
     );
 
     user.token = token;
 
     res.status(201).json(user);
-
-    //
   } catch (error) {
-    // throw.error
+    res.status(500).send("Internal Server Error");
   }
 });
-
-// app.post("/login", (req, res) => {
-//   // try
-// });
 
 app.use(express.json());
 app.use("/api", userRoutes);
@@ -69,5 +69,5 @@ app.use("/api", userRoutes);
 const PORT = process.env.PORT || 4001;
 
 app.listen(PORT, () =>
-  console.log(`server is running on http://localhost:4001/`)
+  console.log(`Server is running on http://localhost:${PORT}/`)
 );
