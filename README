@@ -81,3 +81,10 @@ if(logged === 'admin') {
     home, orders, dashboard
 }
 ```
+
+## to generate Random key
+
+```
+ node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"
+
+```
