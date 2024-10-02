@@ -1,23 +1,31 @@
-import express from "express";
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import User from "./models/user.js";
-import dotenv from "dotenv";
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv");
+
+const userRoutes = require("./routes/userRouters");
 
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 mongoose
   .connect("mongodb://localhost:27017/foodp")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB", err));
 
-app.get("/user-register", (req, res) => {
-  res.send("Hey Welcome to Food Delivery App login here");
-});
+app.use("/api/users", userRoutes);
 
+app.use((err, req, res, next) => {
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  res.status(statusCode);
+  res.json({
+    message: err.message,
+    stack: process.env.NODE_ENV === "production" ? null : err.stack,
+  });
+});
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
