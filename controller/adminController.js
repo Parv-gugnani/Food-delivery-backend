@@ -75,7 +75,6 @@ const registerAdminUser = asyncHandler(async (req, res) => {
   }
 });
 
-// Login User
 const loginAdminUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
