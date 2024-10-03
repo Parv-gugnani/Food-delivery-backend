@@ -3,12 +3,11 @@ const Menu = require("../models/menu");
 const addMenuItem = async (req, res) => {
   const { restaurantId, name, price, description } = req.body;
 
-  if (!restaurantId || !name || !price) {
+  if (!name || !price) {
     return res.status(400).json({ message: "Please fill all required fields" });
   }
 
   const newItem = new Menu({
-    restaurantId,
     name,
     price,
     description,
