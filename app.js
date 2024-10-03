@@ -4,6 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRouters");
 const adminUsersRoutes = require("./routes/adminRouters");
+const menuRouters = require("./routes/menuRouters");
 
 const app = express();
 
@@ -18,9 +19,15 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB", err));
 
-// User routes
+// User Login/sigup
 app.use("/api/users", userRoutes);
+//
+//
+//
+// Admin Login/sigup
 app.use("/api/adminusers", adminUsersRoutes);
+
+app.use("/api/menu", menuRouters);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
