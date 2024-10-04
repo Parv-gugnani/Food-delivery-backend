@@ -78,13 +78,13 @@ const registerAdminUser = asyncHandler(async (req, res) => {
 const loginAdminUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("JWT_SECRET:", process.env.JWT_SECRET);
+  // console.log("JWT_SECRET:", process.env.JWT_SECRET);
   if (!email || !password) {
     res.status(400);
     throw new Error("Please fill all fields");
   }
 
-  const adminUser = await AdminUser.findOne({ email });
+  const adminUser = await AdminUser.findOne({ email: req.body.email });
 
   if (adminUser && (await bcrypt.compare(password, adminUser.password))) {
     res.json({

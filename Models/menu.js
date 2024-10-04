@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const MenuSchema = mongoose.Schema({
-  restuarantId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "AdminUser",
-    required: true,
-  },
+  // restuarantId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "AdminUser",
+  //   required: true,
+  // },
   items: [
     {
       itemName: {

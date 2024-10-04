@@ -4,8 +4,6 @@ const { viewMenu, addMenuItem } = require("../controller/menuController");
 
 const router = express.Router();
 
-router.post("/menu/add", protect, adminProtect, addMenuItem);
-
-router.get("/menu/view/:restaurantId", protect, viewMenu);
+router.get("/menu/view", viewMenu);
 
 module.exports = router;
