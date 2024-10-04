@@ -12,5 +12,20 @@ const OrderSchema = mongoose.Schema({
   },
   payment: {
     type: Boolean,
+    required: true,
+  },
+  deliveryTime: {
+    type: String,
+  },
+  orderStatus: {
+    type: String,
+    enum: ["Pending", "In Progress", "Delivered"],
+    default: "Pending",
+  },
+  totalPrice: {
+    type: Number,
+    required: true,
   },
 });
+
+module.exports = mongoose.model("Order", OrderSchema);
