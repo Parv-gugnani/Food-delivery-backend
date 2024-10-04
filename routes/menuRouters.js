@@ -4,6 +4,10 @@ const { viewMenu, addMenuItem } = require("../controller/menuController");
 
 const router = express.Router();
 
-router.get("/menu/view", viewMenu);
+//get
+router.get("/view", viewMenu);
+
+//post
+router.post("/add", addMenuItem);
 
 module.exports = router;
