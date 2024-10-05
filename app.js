@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRouters");
 const adminUsersRoutes = require("./routes/adminRouters");
 const menuRouters = require("./routes/menuRouters");
+const orderRouters = require("./routes/orderRouters");
 
 const app = express();
 
@@ -27,7 +28,11 @@ app.use("/api/users", userRoutes);
 // Admin Login/sigup
 app.use("/api/adminusers", adminUsersRoutes);
 
+//menu
 app.use("/api/menu", menuRouters);
+
+//orders
+app.use("/api/order", orderRouters);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
