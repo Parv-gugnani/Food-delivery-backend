@@ -1,15 +1,15 @@
-const Menu = require("../models/menu");
+const Item = require("../models/item");
 
-const viewMenu = async (req, res) => {
+const viewItem = async (req, res) => {
   try {
-    const menuItems = await Menu.find();
+    const menuItems = await Item.find();
     res.status(200).json(menuItems);
   } catch (error) {
     res.status(500).json({ message: "Error fetching menu" });
   }
 };
 
-const addMenuItem = async (req, res) => {
+const addItem = async (req, res) => {
   const { name, price, description, category } = req.body;
 
   if (!name || !price || !description || !category) {
@@ -27,8 +27,8 @@ const addMenuItem = async (req, res) => {
     const savedItem = await newItem.save();
     res.status(201).json(savedItem);
   } catch (error) {
-    res.status(500).json({ message: "Error adding menu item" });
+    res.status(500).json({ message: "Error adding item" });
   }
 };
 
-module.exports = { viewMenu, addMenuItem };
+module.exports = { viewItem, addItem };

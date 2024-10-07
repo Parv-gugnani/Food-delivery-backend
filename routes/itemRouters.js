@@ -1,13 +1,13 @@
 const express = require("express");
 const { isAdmin, isUser } = require("../middleware/auth");
-const { viewMenu, addMenuItem } = require("../controller/menuController");
+const { viewItem, addItem } = require("../controller/itemController");
 
 const router = express.Router();
 
 //get
-router.get("/view", viewMenu, isUser);
+router.get("/view", viewItem, isUser);
 
 //post
-router.post("/add", addMenuItem, isAdmin);
+router.post("/add", addItem, isAdmin);
 
 module.exports = router;

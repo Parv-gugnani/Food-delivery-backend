@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const MenuSchema = new mongoose.Schema(
+const ItemSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -28,5 +28,5 @@ const MenuSchema = new mongoose.Schema(
   }
 );
 
-const Menu = mongoose.model("Menu", MenuSchema);
-module.exports = Menu;
+const Item = mongoose.model("Item", ItemSchema);
+module.exports = Item;

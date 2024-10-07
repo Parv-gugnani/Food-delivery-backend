@@ -4,7 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRouters");
 const adminUsersRoutes = require("./routes/adminRouters");
-const menuRouters = require("./routes/menuRouters");
+const itemRouters = require("./routes/itemRouters");
 const orderRouters = require("./routes/orderRouters");
 
 const app = express();
@@ -29,7 +29,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/admin", adminUsersRoutes);
 
 //menu
-app.use("/api/menu", menuRouters);
+app.use("/api/item", itemRouters);
 
 //orders
 app.use("/api/order", orderRouters);
