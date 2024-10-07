@@ -18,6 +18,7 @@ const registerAdminUser = asyncHandler(async (req, res) => {
     restaurantPhoneNumber,
     email,
     password,
+    userRole,
   } = req.body;
 
   if (
@@ -29,7 +30,8 @@ const registerAdminUser = asyncHandler(async (req, res) => {
     !restaurantAddress ||
     !restaurantPhoneNumber ||
     !email ||
-    !password
+    !password ||
+    !userRole
   ) {
     res.status(400);
     throw new Error("Please fill all fields");
@@ -54,6 +56,7 @@ const registerAdminUser = asyncHandler(async (req, res) => {
     restaurantPhoneNumber,
     email,
     password: hashedPassword,
+    userRole,
   });
 
   if (adminUser) {
@@ -68,6 +71,7 @@ const registerAdminUser = asyncHandler(async (req, res) => {
       restaurantPhoneNumber: adminUser.restaurantPhoneNumber,
       email: adminUser.email,
       token: generateToken(adminUser._id),
+      userRole: adminUser.userRole,
     });
   } else {
     res.status(400);
@@ -98,6 +102,7 @@ const loginAdminUser = asyncHandler(async (req, res) => {
       restaurantPhoneNumber: adminUser.restaurantPhoneNumber,
       email: adminUser.email,
       token: generateToken(adminUser._id),
+      userRole: adminUser.userRole,
     });
   } else {
     res.status(400);
