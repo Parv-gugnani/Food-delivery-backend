@@ -26,7 +26,7 @@ app.use("/api/users", userRoutes);
 //
 //
 // Admin Login/sigup
-app.use("/api/adminusers", adminUsersRoutes);
+app.use("/api/admin", adminUsersRoutes);
 
 //menu
 app.use("/api/menu", menuRouters);

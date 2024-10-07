@@ -3,40 +3,18 @@ const asyncHandler = require("express-async-handler");
 const AdminUser = require("../models/admin");
 const User = require("../models/user");
 
-const protect = asyncHandler(async (req, res, next) => {
-  let token;
-
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    try {
-      token = req.authorizations.split(" ")[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      req.user =
-        (await AdminUser.findById(decoded.id).select("-password")) ||
-        (await User.findById(decoded.id).select("password"));
-      next();
-    } catch (error) {
-      res.status(401);
-      throw new Error("Not authorized, token failed");
-    }
+const isAdmin = (req, res, next) => {
+  if (req.user.userRole !== "admin") {
+    return res.status(403).json({ message: "Unauthorized access" });
   }
-
-  if (!token) {
-    res.status(401);
-    throw new Error("Not Authorized, no token");
-  }
-});
-
-const adminProtect = (req, res, next) => {
-  if (req.user && req.user.restaurantName) {
-    next();
-  } else {
-    res.status(403);
-    throw new Error("Admin acess required");
-  }
+  next();
 };
 
-module.exports = { protect, adminProtect };
+const isUser = (req, res, next) => {
+  if (req.user.userRole !== "user") {
+    return res.status(403).json({ message: "Unauthorized access" });
+  }
+  next();
+};
+
+module.exports = { isAdmin, isUser };

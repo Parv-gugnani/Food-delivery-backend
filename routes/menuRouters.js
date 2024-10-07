@@ -1,13 +1,13 @@
 const express = require("express");
-// const { protect, adminProtect } = require("../middleware/auth");
+const { isAdmin, isUser } = require("../middleware/auth");
 const { viewMenu, addMenuItem } = require("../controller/menuController");
 
 const router = express.Router();
 
 //get
-router.get("/view", viewMenu);
+router.get("/view", viewMenu, isUser);
 
 //post
-router.post("/add", addMenuItem);
+router.post("/add", addMenuItem, isAdmin);
 
 module.exports = router;
