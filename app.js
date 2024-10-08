@@ -6,12 +6,15 @@ const userRoutes = require("./routes/userRouters");
 const adminUsersRoutes = require("./routes/adminRouters");
 const itemRouters = require("./routes/itemRouters");
 const orderRouters = require("./routes/orderRouters");
+// const connectDB = require("./config/db");
 
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+// connectDB();
 
 dotenv.config();
 

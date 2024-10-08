@@ -3,8 +3,9 @@ const asyncHandler = require("express-async-handler");
 
 const addOrder = asyncHandler(async (req, res) => {
   const {
+    user,
     orderLocation,
-    foodName,
+    items,
     payment,
     deliveryTime,
     orderStatus,
@@ -12,58 +13,43 @@ const addOrder = asyncHandler(async (req, res) => {
   } = req.body;
 
   if (
+    !user ||
     !orderLocation ||
-    !foodName ||
+    !items ||
     !payment ||
     !deliveryTime ||
     !orderStatus ||
     !totalPrice
   ) {
-    return res.status(400).json({ message: "Please fill all required fields" });
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   const newOrder = new Order({
+    user,
     orderLocation,
-    foodName,
+    items,
     payment,
     deliveryTime,
     orderStatus,
     totalPrice,
   });
 
-  try {
-    const savedOrder = await newOrder.save();
-    res.status(201).json(savedOrder);
-  } catch (error) {
-    res.status(500).json({ message: "Error adding Order" });
-  }
+  const savedOrder = await newOrder.save();
+  res.status(201).json(savedOrder);
 });
 
-//view Orders
-const viewOrder = asyncHandler(async (req, res) => {
-  try {
-    const orders = await Order.find();
-    res.status(200).json(orders);
-  } catch {
-    res.status(500).json({ message: "Error Fetching Orders" });
-  }
+const viewOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find().populate("user items");
+  res.status(200).json(orders);
 });
 
-//if user !address
-
-//using id
 const viewOrderById = asyncHandler(async (req, res) => {
   const { id } = req.params;
-
-  try {
-    const order = await Order.findById(id);
-    if (!order) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-    res.status(200).json(order);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching the order" });
+  const order = await Order.findById(id).populate("user items");
+  if (!order) {
+    return res.status(404).json({ message: "Order not found" });
   }
+  res.status(200).json(order);
 });
 
-module.exports = { addOrder, viewOrder, viewOrderById };
+module.exports = { addOrder, viewOrders, viewOrderById };

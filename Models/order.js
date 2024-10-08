@@ -1,31 +1,26 @@
-const express = require("express");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
-const OrderSchema = mongoose.Schema({
-  orderLocation: {
-    type: String,
-    required: true,
-  },
-  foodName: {
-    type: String,
-    required: true,
-  },
-  payment: {
-    type: Boolean,
-    required: true,
-  },
-  deliveryTime: {
-    type: String,
-  },
-  orderStatus: {
-    type: String,
-    enum: ["Pending", "In Progress", "Delivered"],
-    default: "Pending",
-  },
-  totalPrice: {
-    type: Number,
-    required: true,
-  },
-});
+const genOwn = () => {
+  return Math.floor(100 + Math.random() * 900);
+};
 
-module.exports = mongoose.model("Order", OrderSchema);
+const orderSchema = new mongoose.Schema(
+  {
+    customId: { type: Number, default: genOwn, unique: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    orderLocation: { type: String, required: true },
+    items: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }],
+    payment: { type: String, required: true },
+    deliveryTime: { type: Date, required: true },
+    orderStatus: {
+      type: String,
+      enum: ["pending", "completed", "cancelled"],
+      default: "pending",
+    },
+    totalPrice: { type: Number, required: true },
+  },
+  { timestamps: true }
+);
+
+const Order = mongoose.model("Order", orderSchema);
+module.exports = Order;
