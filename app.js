@@ -20,21 +20,14 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB", err));
 
-// User Login/sigup
 app.use("/api/users", userRoutes);
-//
-//
-//
-// Admin Login/sigup
+
 app.use("/api/admin", adminUsersRoutes);
 
-//menu
 app.use("/api/item", itemRouters);
 
-//orders
 app.use("/api/order", orderRouters);
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode);
@@ -44,7 +37,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}/`);
