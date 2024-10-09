@@ -1,4 +1,5 @@
 const Order = require("../models/order");
+const Cart = require("../models/cart");
 const asyncHandler = require("express-async-handler");
 
 const addOrder = asyncHandler(async (req, res) => {
@@ -10,7 +11,34 @@ const addOrder = asyncHandler(async (req, res) => {
     deliveryTime,
     orderStatus,
     totalPrice,
+    useCart,
   } = req.body;
+
+  if (useCart) {
+    const cart = await Cart.findOne({ user }).populate("items.item");
+    if (!cart || cart.items.length === 0) {
+      return res.status(400).json({ message: "Cart is empty" });
+    }
+
+    const newOrder = new Order({
+      user,
+      orderLocation,
+      items: cart.items.map((cartItem) => ({
+        item: cartItem.item._id,
+        quantity: cartItem.quantity,
+      })),
+      payment,
+      deliveryTime,
+      orderStatus: "pending",
+      totalPrice: cart.totalPrice,
+    });
+
+    const savedOrder = await newOrder.save();
+
+    await Cart.findOneAndDelete({ user });
+
+    return res.status(201).json(savedOrder);
+  }
 
   if (
     !user ||

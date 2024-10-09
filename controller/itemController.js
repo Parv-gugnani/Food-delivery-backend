@@ -15,7 +15,7 @@ const addItem = async (req, res) => {
   if (!name || !price || !description || !category) {
     return res.status(400).json({ message: "Please fill all fields" });
   }
-
+  c;
   const newItem = new Menu({
     name,
     price,
