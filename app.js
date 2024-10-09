@@ -31,6 +31,15 @@ app.use("/api/item", itemRouters);
 
 app.use("/api/order", orderRouters);
 
+app.use("/api/order", orderRouters);
+
+//default page
+app.get("/", (req, res) => {
+  res.send(
+    "<h1>Welcome to the Food Delivery App!</h1><p>Enjoy our service!</p>"
+  );
+});
+
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode);

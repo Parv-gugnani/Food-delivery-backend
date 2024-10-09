@@ -9,35 +9,29 @@ const generateToken = (id) => {
 
 // Register User
 const registerUser = asyncHandler(async (req, res) => {
-  const { firstName, lastName, address, phoneNumber, email, password } =
-    req.body;
+  const { firstName, lastName, email, password } = req.body;
 
-  if (
-    !firstName ||
-    !lastName ||
-    !address ||
-    !phoneNumber ||
-    !email ||
-    !password
-  ) {
+  // Check for required fields
+  if (!firstName || !lastName || !email || !password) {
     res.status(400);
     throw new Error("Please fill all fields");
   }
 
+  // Check if user already exists
   const userExist = await User.findOne({ email });
   if (userExist) {
     res.status(400);
     throw new Error("User Already Exist");
   }
 
+  // Hash the password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
+  // Create the user with minimal details
   const user = await User.create({
     firstName,
     lastName,
-    address,
-    phoneNumber,
     email,
     password: hashedPassword,
   });
@@ -47,8 +41,6 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
-      address: user.address,
-      phoneNumber: user.phoneNumber,
       email: user.email,
       token: generateToken(user._id),
     });
@@ -85,7 +77,33 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+const updateProfile = asyncHandler(async (req, res) => {
+  const { address, phoneNumber } = req.body;
+  const userId = req.user._id;
+
+  // Update the user with additional details
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { address, phoneNumber },
+    { new: true, runValidators: true }
+  );
+
+  if (updatedUser) {
+    res.status(200).json({
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+      email: updatedUser.email,
+      address: updatedUser.address,
+      phoneNumber: updatedUser.phoneNumber,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 module.exports = {
   registerUser,
   loginUser,
+  updateProfile,
 };
