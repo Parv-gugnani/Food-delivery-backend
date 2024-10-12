@@ -75,7 +75,6 @@ const updateProfile = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const updates = {};
 
-  // Loop through request body and prepare updates
   Object.keys(req.body).forEach((key) => {
     if (req.body[key] !== undefined) {
       updates[key] = req.body[key];
